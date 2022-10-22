@@ -13,6 +13,8 @@ class m221015_000000_install_langs extends \yii\db\Migration
             'shortcut' => $this->string(10)->notNull()->unique(),
             'name' => $this->string()
         ], 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB');
+        $this->insert('{{lang}}', ['shortcut' => 'cs', 'name' => 'Czech']);
+        $this->insert('{{lang}}', ['shortcut' => 'en', 'name' => 'English']);
     }
 
     public function down()

@@ -32,3 +32,20 @@ services:
             MYSQL_DATABASE: web
             MYSQL_USER: web
             MYSQL_PASSWORD: web
+    
+    frontend:
+        image: node:current-alpine
+        working_dir: /app
+        user: node
+        depends_on:
+            - web
+        volumes:
+            - ./frontend/:/app/
+        env_file:
+            - ./.env
+        tty: true
+        ports:
+            - 3000:3000
+        command: sh -c "npm install && npm run start"
+        environment:
+            - REACT_APP_API_URL=${REACT_APP_API_URL}
