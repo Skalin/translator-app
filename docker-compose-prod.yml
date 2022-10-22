@@ -1,0 +1,63 @@
+version: '3'
+services:
+    web:
+        build: ./
+        # During development we map local files into the container
+        volumes:
+            # Map current working copy into the container
+            - ./:/var/www/html/
+
+            # Uncomment to use dev specific PHP settings
+            #- ./config/php/local.ini:/etc/php7/conf.d/99-local.ini
+
+            # Uncomment to use the local vendor directory, e.g. for debugging.
+            # This requires that you have copied the directory to your host with
+            #   docker-compose run --rm web cp -ra /var/www/vendor .
+            #- ./vendor:/var/www/vendor
+        links:
+            - db
+        environment:
+            # Make sure to tweak this in production
+            PHP_FPM_MAX_CHILDREN: 5
+            # Enable periodic jobs (see config/crontabs)
+            #ENABLE_CROND: 1
+        ports:
+            - "8080:80"
+        depends_on:
+            - db
+
+    db:
+        image: mysql:5
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: web
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+    frontend:
+        image: node:current-alpine
+        working_dir: /app
+        user: node
+        depends_on:
+            - web
+        volumes:
+            - ./frontend/:/app/
+        env_file:
+            - ./.env
+        tty: true
+        ports:
+            - 3000:3000
+        command: sh -c "npm install && npm run start"
+        environment:
+            - REACT_APP_API_URL=${REACT_APP_API_URL}
+    
+    phpmyadmin:
+        depends_on:
+            - db
+        image: phpmyadmin
+        environment:
+            - PMA_HOST=db
+            - PMA_USER=root
+            - PMA_PASSWORD=root
+        ports:
+            - 8888:80
+        restart: always
