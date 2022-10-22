@@ -1,0 +1,12 @@
+#
+# Crontab for user www-data
+#
+# Notes:
+#
+#  - /var/www/html is in $PATH (see etc/services.d/crond/run)
+#  - If a command started by the same crontab line is still running
+#    it's not started again (extra feature of crond in busybox)
+#
+
+# min   hour    day     month   weekday command
+#*       *       *       *       *       yii some/command
