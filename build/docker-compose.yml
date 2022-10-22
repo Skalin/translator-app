@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+    # Application base image
+    #
+    # This image contains:
+    #
+    #  - PHP runtime
+    #  - PHP extensions
+    #  - Composer packages
+    #
+    base:
+        # Specify a tag name for your base image here:
+        image: myregistry.example.com/myproject/myapp:base-1.0
+        build: ./
+
+    # Composer utility to manage composer packages
+    #
+    # You will usually only ever run one of these commands:
+    #
+    #  docker-compose run --rm composer require [...]
+    #  docker-compose run --rm composer update [...]
+    #
+    # You may have to add --ignore-platform-reqs.
+    # When changing packages you must rebuild the base container.
+    #
+    composer:
+        image: composer
+        volumes:
+            - ./:/app
+        entrypoint: composer

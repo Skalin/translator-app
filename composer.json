@@ -1,0 +1,32 @@
+{
+	"name": "codemix/yii2-dockerized",
+	"description": "A template for docker based Yii 2 applications",
+	"keywords": ["yii2", "framework", "docker", "application template"],
+	"type": "project",
+	"license": "MIT",
+	"minimum-stability": "stable",
+	"require": {
+		"php": ">=5.4.0",
+		"yiisoft/yii2": "2.0.40",
+		"yiisoft/yii2-bootstrap": "^2.0.0",
+		"yiisoft/yii2-swiftmailer": "^2.1.0",
+		"codemix/yii2-configloader": "^0.10.0",
+		"codemix/yii2-streamlog": "^1.3.0",
+		"yiisoft/yii2-debug": "^2.1.0",
+		"yiisoft/yii2-gii": "^2.1.0",
+		"ext-zip": "^1.15"
+	},
+	"config": {
+		"process-timeout": 1800,
+		"vendor-dir": "/var/www/vendor",
+		"allow-plugins": {
+			"yiisoft/yii2-composer": true
+		}
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	]
+}
