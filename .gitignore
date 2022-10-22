@@ -24,6 +24,7 @@ config/php/local.ini
 /build
 
 # misc
+.history/
 .DS_Store
 .env.local
 .env.development.local
